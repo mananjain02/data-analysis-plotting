@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
  
 allplots = {
@@ -38,10 +39,13 @@ allplots = {
 
 # Create your views here.
 def index(request, slug):
-    return render(request, 'showplots/index.html', {
-        "page_title": slug,
-        "plots": list(allplots[slug])
-    })
+    try: 
+        return render(request, 'showplots/index.html', {
+            "page_title": slug,
+            "plots": list(allplots[slug])
+        })
+    except:
+        raise Http404
 
 def starting_page(request):
     return render(request, 'showplots/starting_page.html', {
